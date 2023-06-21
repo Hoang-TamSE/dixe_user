@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Update"),
+            title: Text("Cập nhật"),
             content: SingleChildScrollView(
               child: Column(
                 children: [
@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
+                    "Hủy",
                     style: TextStyle(color: Colors.red),
                   )),
               TextButton(
@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       nameTextEditingController.clear();
                       Fluttertoast.showToast(
                           msg:
-                              "Updated Successfully. \n Reload the app to see the changes");
+                              "Đã cập nhật thành công và Tải lại ứng dụng để xem các thay đổi");
                     }).catchError((errorMessage) {
                       Fluttertoast.showToast(
                           msg: "Error Occcured. \n $errorMessage");
@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Ok",
+                    "Sửa",
                     style: TextStyle(color: Colors.red),
                   )),
             ],
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Update"),
+            title: Text("Cập nhật"),
             content: SingleChildScrollView(
               child: Column(
                 children: [
@@ -102,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
+                    "Hủy",
                     style: TextStyle(color: Colors.red),
                   )),
               TextButton(
@@ -113,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       phoneTextEditingController.clear();
                       Fluttertoast.showToast(
                           msg:
-                              "Updated Successfully. \n Reload the app to see the changes");
+                              "Cập nhật thành công. Tải lại ứng dụng để xem các thay đổi");
                     }).catchError((errorMessage) {
                       Fluttertoast.showToast(
                           msg: "Error Occcured. \n $errorMessage");
@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Ok",
+                    "Sửa",
                     style: TextStyle(color: Colors.red),
                   )),
             ],
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Update"),
+            title: Text("Cập nhật"),
             content: SingleChildScrollView(
               child: Column(
                 children: [
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
+                    "Hủy",
                     style: TextStyle(color: Colors.red),
                   )),
               TextButton(
@@ -162,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       addressTextEditingController.clear();
                       Fluttertoast.showToast(
                           msg:
-                              "Updated Successfully. \n Reload the app to see the changes");
+                              "Cập nhật thành công. Tải lại ứng dụng để xem các thay đổi");
                     }).catchError((errorMessage) {
                       Fluttertoast.showToast(
                           msg: "Error Occcured. \n $errorMessage");
@@ -170,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Ok",
+                    "Sửa",
                     style: TextStyle(color: Colors.red),
                   )),
             ],
@@ -183,13 +183,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Update"),
+            title: Text("Cập nhật"),
             content: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
                     child: _showImageAvatar == null
-                        ? Text("No image selected")
+                        ? Text("Không có hình ảnh")
                         : Image.file(_showImageAvatar!),
                   ),
                   SizedBox(
@@ -210,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
+                    "Hủy",
                     style: TextStyle(color: Colors.red),
                   )),
               TextButton(
@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   },
                   child: Text(
-                    "Ok",
+                    "Sửa",
                     style: TextStyle(color: Colors.red),
                   )),
             ],
