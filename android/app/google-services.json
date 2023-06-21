@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "250211005371",
+    "project_id": "dixa-app-47a21",
+    "storage_bucket": "dixa-app-47a21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250211005371:android:0b825de4b80ee25d440a9e",
+        "android_client_info": {
+          "package_name": "com.example.dixa_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250211005371-srqv9fckj42qhj2scepqaoa9ncha0ltr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dixa_user",
+            "certificate_hash": "2ced2611e7f2bc4c9999e903e8382f79f95c6fc6"
+          }
+        },
+        {
+          "client_id": "250211005371-ak2vkip7anrr5lvpc8tt0j60dnaobsvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJC9FfnJXixBpWyFCJh-4h1ETt1jL01tY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250211005371-ak2vkip7anrr5lvpc8tt0j60dnaobsvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
