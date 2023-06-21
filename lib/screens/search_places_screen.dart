@@ -17,7 +17,7 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
   findPlaceAutoCompleteSearch(String inputText) async {
     if (inputText.length > 1) {
       String urlAutoCompleteSearch =
-      "https://rsapi.goong.io/Place/AutoComplete?api_key=OFZ9O8Z3VMBj7mYuwxWzmTGgR3QruDWLd4B3FiEq&input=$inputText";
+      "https://rsapi.goong.io/Place/AutoComplete?api_key=$mapgoongkey&input=$inputText";
           // "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$inputText&key=$mapKey&components=country:VN";
 
       var responseAutoCompleteSearch =

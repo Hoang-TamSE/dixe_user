@@ -3,6 +3,7 @@ import 'package:dixa_user/screens/login_screen.dart';
 import 'package:dixa_user/screens/search_places_screen.dart';
 import 'package:dixa_user/splashScreen/splash_screen.dart';
 import 'package:dixa_user/themeProvider/theme_provider.dart';
+import 'package:dixa_user/widgets/pay_fare_amout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

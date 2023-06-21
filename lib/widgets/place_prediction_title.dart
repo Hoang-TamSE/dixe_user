@@ -27,7 +27,7 @@ class _PlacePredictionTitleDesignState
               message: "Setting up Drop-off, Please wait ...",
             ));
     String placeDirectionDetailsUrl =
-    "https://rsapi.goong.io/geocode?place_id=$placeId&api_key=OFZ9O8Z3VMBj7mYuwxWzmTGgR3QruDWLd4B3FiEq";
+    "https://rsapi.goong.io/geocode?place_id=$placeId&api_key=$mapgoongkey";
         // "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey";
     var responseApi =
         await RequestAssistant.receiveRequest(placeDirectionDetailsUrl);

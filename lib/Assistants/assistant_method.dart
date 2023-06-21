@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:dixa_user/Assistants/map_key.dart';
 import 'package:dixa_user/Assistants/request_assistant.dart';
 import 'package:dixa_user/global/global.dart';
@@ -9,6 +12,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class AssitantMethods {
   static void readCurrentOnlineUserInfo() async {
@@ -26,7 +30,7 @@ class AssitantMethods {
   static Future<String> searchAddressForGeographicCoOrdinates(
       Position position, context) async {
     String apiUrl =
-        "https://rsapi.goong.io/Geocode?latlng=${position.latitude},${position.longitude}&api_key=OFZ9O8Z3VMBj7mYuwxWzmTGgR3QruDWLd4B3FiEq";
+        "https://rsapi.goong.io/Geocode?latlng=${position.latitude},${position.longitude}&api_key=$mapgoongkey";
     // "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey";
     String humanReadableAddress = "";
     print(apiUrl);
@@ -48,14 +52,13 @@ class AssitantMethods {
   static Future<String> searchAddressForPickUpAddress(
       latitude, longtitude, context) async {
     String apiUrl =
-        "https://rsapi.goong.io/Geocode?latlng=${latitude},${longtitude}&api_key=OFZ9O8Z3VMBj7mYuwxWzmTGgR3QruDWLd4B3FiEq";
+        "https://rsapi.goong.io/Geocode?latlng=${latitude},${longtitude}&api_key=$mapgoongkey";
     // "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey";
     String humanReadableAddress = "";
     print(apiUrl);
     var requestResponse = await RequestAssistant.receiveRequest(apiUrl);
     if (requestResponse != "Error Occured. Failde. No Response.") {
       humanReadableAddress = requestResponse["results"][0]["formatted_address"];
-
     }
     return humanReadableAddress;
   }
@@ -63,8 +66,8 @@ class AssitantMethods {
   static Future<DirectionDetailsInfo> obtainOriginToDestinationDirectionDetails(
       LatLng originPosition, LatLng destinationPosition) async {
     String urlOriginToDestinationDirectionDetails =
-    "https://rsapi.goong.io/Direction?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&vehicle=hd&api_key=OFZ9O8Z3VMBj7mYuwxWzmTGgR3QruDWLd4B3FiEq";
-        // "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKey";
+        "https://rsapi.goong.io/Direction?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&vehicle=hd&api_key=$mapgoongkey";
+    // "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKey";
     var responseDirectionApi = await RequestAssistant.receiveRequest(
         urlOriginToDestinationDirectionDetails);
     if (responseDirectionApi == "Error Occured. Failde. No Response.") {
@@ -86,5 +89,52 @@ class AssitantMethods {
     directionDetailsInfo.duration_value =
         responseDirectionApi["routes"][0]["legs"][0]["duration"]["value"];
     return directionDetailsInfo;
+  }
+
+  static double caculateFareAmountFromOriginToDestination(
+      DirectionDetailsInfo directionDetailsInfo) {
+    double timeTravelledFareAmountPerMinute =
+        (directionDetailsInfo.duration_value! / 60) * 0.1;
+
+    double distanceTraveledFareAmountPerKilometer =
+        (directionDetailsInfo.distance_value! / 1000) * 0.1;
+
+    double totalFareAmount = (timeTravelledFareAmountPerMinute +
+            distanceTraveledFareAmountPerKilometer) *
+        22000;
+    return double.parse(totalFareAmount.toStringAsFixed(1));
+  }
+
+  static sendNotificationToDriverNow(
+      String deviveRegistrationToken, String userRideRequestId, context) async {
+    String destinationAddress = userDropOffAddress;
+    Map<String, String> headerNotificaiton = {
+      'Content-type': 'application/json',
+      'Authorization': cloudMessagingServerToken,
+    };
+
+    Map bodyNotification = {
+      "body": "Destination Address: \n$destinationAddress.",
+      "title": "New Trip Request"
+    };
+
+    Map dataMap = {
+      "click_action": "Flutter_NOTIFICATION_CLICK",
+      "id": "1",
+      "status": "done",
+      "rideRequestId": userRideRequestId
+    };
+    Map officialNotificationFormat = {
+      "notification": bodyNotification,
+      "data": dataMap,
+      "priority": "high",
+      "to": deviveRegistrationToken,
+    };
+    var responseNotification = http.post(
+      Uri.parse("https://fcm.googleapis.com/fcm/send"),
+      headers: headerNotificaiton,
+      body: jsonEncode(officialNotificationFormat),
+    );
+    print(responseNotification.toString());
   }
 }
