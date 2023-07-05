@@ -178,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
-  Future<void> showImageDialogAlert(BuildContext context) async {
+  Future<void> showImageDialogAlert(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -215,21 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )),
               TextButton(
                   onPressed: () {
-                    userRef.child(firebaseAuth.currentUser!.uid).update({
-                      "avatar": imageEdit,
-                    }).then((value) {
-                      Fluttertoast.showToast(msg: "Updated Successfully.");
-                    }).catchError((errorMessage) {
-                      Fluttertoast.showToast(
-                          msg: "Error Occcured. \n $errorMessage");
-                    });
-                    userModelCurrentInfo?.avatar = imageEdit;
-                    _showImageAvatar = null;
-                    Navigator.pop(context);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainScreen()),
-                    );
+                    _submit();
                   },
                   child: Text(
                     "Sửa",
@@ -246,15 +232,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (pick != null) {
         _showImageAvatar = File(pick.path);
       } else {
-        Fluttertoast.showToast(msg: "No file selected");
+        Fluttertoast.showToast(msg: "Không có tập tin được chọn");
       }
-    });
+    }
+    );
+  }
+
+  void _submit() async {
     Reference referenceImageToUpload = FirebaseStorage.instance.refFromURL(
         'gs://dixa-app-47a21.appspot.com/${userModelCurrentInfo!.id!}/avatar');
     try {
-      await referenceImageToUpload.putFile(File(pick!.path));
+      await referenceImageToUpload.putFile(_showImageAvatar!);
       imageEdit = await referenceImageToUpload.getDownloadURL();
     } catch (error) {}
+
+    userRef.child(firebaseAuth.currentUser!.uid).update({
+      "avatar": imageEdit,
+    }).then((value) {
+      Fluttertoast.showToast(msg: "Updated Successfully.");
+    }).catchError((errorMessage) {
+      Fluttertoast.showToast(msg: "Error Occcured. \n $errorMessage");
+    });
+    userModelCurrentInfo?.avatar = imageEdit;
+    _showImageAvatar = null;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MainScreen()),
+    );
   }
 
   @override
